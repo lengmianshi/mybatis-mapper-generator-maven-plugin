@@ -22,7 +22,7 @@ mybatis-mapper代码生成器要与mybatis-mapper（项目地址：https://mappe
 </plugins>
 ```
 
-2. 在项目的resource/generator目录下创建generatorConfig.xml，内容如下：
+2. 在项目的resources/generator目录下创建generatorConfig.xml，内容如下：
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
