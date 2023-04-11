@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        url="jdbc:mysql://172.21.1.13:3306/test" user="root" password="123456">
+        </jdbcConnection>
+        <pojoGenerator package="com.a" project="src/main/java"/>
+        <xmlGenerator package="com.b" project="src/main/resources"/>
+        <mapperGenerator package="mappers" project="src/main/java"/>
+        <serviceGenerator package="com.service" project="src/main/java"/>
+        <serviceImplGenerator package="com.service.impl" project="src/main/java"/>
+
+        <table tableName="login" className="Login" />
+    </context>
+</generatorConfiguration>
