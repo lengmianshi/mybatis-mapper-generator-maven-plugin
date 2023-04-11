@@ -6,14 +6,21 @@
 <generatorConfiguration>
     <context>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        url="jdbc:mysql://172.21.1.13:3306/test" user="root" password="123456">
+                        url="jdbc:mysql://127.0.0.1:3306/dbname?serverTimezone=Asia/Shanghai&amp;zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;allowMultiQueries=true"
+                        user="root"
+                        password="123456">
         </jdbcConnection>
-        <pojoGenerator package="com.a" project="src/main/java"/>
-        <xmlGenerator package="com.b" project="src/main/resources"/>
-        <mapperGenerator package="mappers" project="src/main/java"/>
-        <serviceGenerator package="com.service" project="src/main/java"/>
-        <serviceImplGenerator package="com.service.impl" project="src/main/java"/>
+        <!-- pojo所在的包 -->
+        <pojoGenerator package="com.demo.api.bean.entity" project="../demo-api/src/main/java"/>
+        <!-- 放置mapper的包 -->
+        <mapperGenerator package="com.demo.mapper" project="src/main/java"/>
+        <!-- 放置service的包 -->
+        <serviceGenerator package="com.demo.api.service" project="../demo-api/src/main/java"/>
+        <!-- 放置serviceImpl的包 -->
+        <serviceImplGenerator package="com.demo.service.impl" project="src/main/java"/>
+        <!-- 放置xml文件的包 -->
+        <xmlGenerator package="mappers" project="src/main/resources"/>
 
-        <table tableName="login" className="Login" />
+        <table tableName="test" className="Test" />
     </context>
 </generatorConfiguration>
