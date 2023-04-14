@@ -117,7 +117,7 @@ public class GenerateService {
         String outFilePath = PathUtil.getAbsolutePath(outerProjectDir, projectPath + File.separator + PathUtil.convertPath(packageName) + File.separator + fileName);
         File file = new File(outFilePath);
         if (file.exists() && !isOverride && !isXml) {
-            log.warn("文件已存在，不再创建：" + outFilePath);
+            log.info("文件已存在，不再创建：" + outFilePath);
             return;
         }
 
