@@ -77,12 +77,12 @@ public class TypeUtil {
         put("tinyblob", "TINYBLOB");
         put("mediumblob", "MEDIUMBLOB");
         put("longblob", "LONGBLOB");
-        put("text", "TEXT");
-        put("tinytext", "TINYTEXT");
-        put("mediumtext", "MEDIUMTEXT");
-        put("longtext", "LONGTEXT");
+        put("text", "LONGVARCHAR");
+        put("tinytext", "LONGVARCHAR");
+        put("mediumtext", "LONGVARCHAR");
+        put("longtext", "LONGVARCHAR");
         put("json", "JSON");
-        put("longvarchar", "VARBINARY");
+        put("longvarchar", "LONGVARCHAR");
         put("numeric", "NUMERIC");
         put("real", "REAL");
         put("longvarbinary", "LONGVARBINARY");
