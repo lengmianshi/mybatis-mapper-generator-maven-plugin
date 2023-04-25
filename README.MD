@@ -6,7 +6,7 @@ mybatis-mapper代码生成器要与mybatis-mapper（项目地址：https://mappe
     <plugin>
         <groupId>io.github.lengmianshi</groupId>
         <artifactId>mybatis-mapper-generator-maven-plugin</artifactId>
-        <version>1.0</version>
+        <version>1.0.2</version>
         <configuration>
             <configFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configFile>
         </configuration>
@@ -25,9 +25,7 @@ mybatis-mapper代码生成器要与mybatis-mapper（项目地址：https://mappe
 2. 在项目的resources/generator目录下创建generatorConfig.xml，内容如下：
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE generatorConfiguration
-        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!DOCTYPE generatorConfiguration >
 
 <generatorConfiguration>
     <context>

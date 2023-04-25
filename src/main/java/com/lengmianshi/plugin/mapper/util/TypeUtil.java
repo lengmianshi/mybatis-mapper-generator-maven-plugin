@@ -10,6 +10,7 @@ public class TypeUtil {
     /**
      * 数据库类型对应的Java类型
      * 参考：https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-type-conversions.html
+     * 另参考：mybatis-generator-core.1.3.5中org.mybatis.generator.internal.types.JdbcTypeNameTranslator和org.mybatis.generator.internal.typesJavaTypeResolverDefaultImpl
      */
     private static final Map<String, JavaType> DB_JAVA_TYPE_MAP = new HashMap() {{
         put("bit", JavaType.BOOLEAN);

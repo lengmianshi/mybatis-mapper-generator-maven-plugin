@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -202,7 +203,6 @@ public class GenerateService {
                 Set<String> importPackageSet = new HashSet<>();
 
                 List<Field> fieldList = new ArrayList<>();
-                pojo.setFieldList(fieldList);
 
                 st = con.createStatement();
                 ResultSet rs = st.executeQuery(sql);
@@ -248,6 +248,16 @@ public class GenerateService {
                     }
                     fieldList.add(field);
                 }
+
+                //将主键放在前面
+                List<Field> primaryKeyFieldList = fieldList.stream().filter(field -> field.isPrimaryKey()).collect(Collectors.toList());
+                List<Field> unPrimaryKeyFieldList = fieldList.stream().filter(field -> !field.isPrimaryKey()).collect(Collectors.toList());
+
+                List<Field> fields = new ArrayList<>();
+                fields.addAll(primaryKeyFieldList);
+                fields.addAll(unPrimaryKeyFieldList);
+
+                pojo.setFieldList(fields);
 
                 pojo.setPkgList(new ArrayList<>(importPackageSet));
 
