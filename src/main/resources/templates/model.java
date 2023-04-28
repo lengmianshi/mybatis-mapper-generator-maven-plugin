@@ -13,7 +13,7 @@ import [(${pkg})];
 public class [(${p.className})] {
 [# th:each="field : ${p.fieldList}"]
     [# th:if="${field.primaryKey}"]
-    @Entity.Column(value = "[(${field.fieldName})]", id = true, remark = "[(${field.remark})]", updatable = false, insertable = false)
+    @Entity.Column(value = "[(${field.fieldName})]", id = true, remark = "[(${field.remark})]", updatable = false)
     [/]
     [# th:unless="${field.primaryKey}"]
     @Entity.Column(value = "[(${field.fieldName})]", remark = "[(${field.remark})]")
