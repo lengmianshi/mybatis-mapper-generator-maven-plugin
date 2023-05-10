@@ -225,8 +225,9 @@ public class GenerateService {
                 rs = st.executeQuery(sql);
                 while (rs.next()) {
                     Field field = new Field();
-                    field.setFieldName(rs.getString("COLUMN_NAME"));
-                    String javaName = StringUtil.toCamelCase(field.getFieldName());
+                    String originalFieldName = rs.getString("COLUMN_NAME");
+                    field.setFieldName(KeywordsUtil.convertSafeFieldName(originalFieldName));
+                    String javaName = StringUtil.toCamelCase(originalFieldName);
                     if (javaName.length() > 1) {
                         javaName = javaName.substring(0, 1).toLowerCase(Locale.ROOT) + javaName.substring(1);
                     }
