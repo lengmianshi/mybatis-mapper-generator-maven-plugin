@@ -249,6 +249,13 @@ public class GenerateService {
                     }
                     fieldList.add(field);
                 }
+                if (fieldList.isEmpty()) {
+                    throw new RuntimeException("表【" + table.getTableName() + "】不存在");
+                }
+
+                if (StringUtil.isEmpty(pojo.getPrimaryKeyType())) {
+                    throw new RuntimeException("表【" + table.getTableName() + "】没有主键");
+                }
 
                 //将主键放在前面
                 List<Field> primaryKeyFieldList = fieldList.stream().filter(field -> field.isPrimaryKey()).collect(Collectors.toList());

@@ -42,7 +42,7 @@ public class StringUtil {
         return Arrays.stream(source.split("_"))
                 .map(e -> {
                     if (e.length() > 1) {
-                        return e.substring(0, 1).toUpperCase(Locale.ROOT) + e.substring(1);
+                        return e.substring(0, 1).toUpperCase(Locale.ROOT) + e.substring(1).toLowerCase(Locale.ROOT);
                     }
 
                     return e;
