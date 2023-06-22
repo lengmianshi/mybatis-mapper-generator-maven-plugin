@@ -27,6 +27,8 @@ public class Config {
         private String className;
         //是否生成Controller
         //private boolean generateController;
+        //是否生成service
+        private boolean generateService = true;
     }
 
     @Data

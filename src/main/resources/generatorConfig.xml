@@ -19,6 +19,6 @@
         <!-- 放置xml文件的包 -->
         <xmlGenerator package="mappers" project="src/main/resources"/>
 
-        <table tableName="test" className="Test" />
+        <table tableName="test" className="Test" generateService="true"/>
     </context>
 </generatorConfiguration>

@@ -28,8 +28,8 @@ public class XMLUtil {
         if (doc == null)
             return map;
         Element root = doc.getRootElement();
-        for (Iterator iterator = root.elementIterator(); iterator.hasNext(); ) {
-            Element e = (Element) iterator.next();
+        for (Iterator<Element> iterator = root.elementIterator(); iterator.hasNext(); ) {
+            Element e = iterator.next();
             map.put(e.getName(), e.getText());
         }
         return map;
@@ -97,6 +97,10 @@ public class XMLUtil {
                         Config.Table tab = new Config.Table();
                         tab.setTableName(e.attributeValue("tableName"));
                         tab.setClassName(e.attributeValue("className"));
+                        String generateService = e.attributeValue("generateService");
+                        if (StringUtil.isNotEmpty(generateService)) {
+                            tab.setGenerateService(Boolean.valueOf(generateService));
+                        }
 
 //                        String generateController = e.attributeValue("generateController");
 //                        if(StringUtil.isNotEmpty(generateController)){

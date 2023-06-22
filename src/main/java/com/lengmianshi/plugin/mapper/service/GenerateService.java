@@ -60,24 +60,25 @@ public class GenerateService {
             }};
             generateCodeFile(params, config.getMapper().getProjectPath(), config.getMapper().getPackageName(), pojo.getClassName() + "Mapper.java", "mapper.java", templateEngine, false);
 
-            //生成Service
-            params = new HashMap() {{
-                put("p", pojo);
-                put("packageName", config.getService().getPackageName());
-                put("pojoPackageName", config.getPojo().getPackageName());
-            }};
-            generateCodeFile(params, config.getService().getProjectPath(), config.getService().getPackageName(), pojo.getClassName() + "Service.java", "service.java", templateEngine, false);
+            if (table.isGenerateService()) {
+                //生成Service
+                params = new HashMap() {{
+                    put("p", pojo);
+                    put("packageName", config.getService().getPackageName());
+                    put("pojoPackageName", config.getPojo().getPackageName());
+                }};
+                generateCodeFile(params, config.getService().getProjectPath(), config.getService().getPackageName(), pojo.getClassName() + "Service.java", "service.java", templateEngine, false);
 
-            //生成ServiceImpl
-            params = new HashMap() {{
-                put("p", pojo);
-                put("packageName", config.getServiceImpl().getPackageName());
-                put("pojoPackageName", config.getPojo().getPackageName());
-                put("servicePackageName", config.getService().getPackageName());
-                put("mapperPackageName", config.getMapper().getPackageName());
-            }};
-            generateCodeFile(params, config.getServiceImpl().getProjectPath(), config.getServiceImpl().getPackageName(), pojo.getClassName() + "ServiceImpl.java", "serviceImpl.java", templateEngine, false);
-
+                //生成ServiceImpl
+                params = new HashMap() {{
+                    put("p", pojo);
+                    put("packageName", config.getServiceImpl().getPackageName());
+                    put("pojoPackageName", config.getPojo().getPackageName());
+                    put("servicePackageName", config.getService().getPackageName());
+                    put("mapperPackageName", config.getMapper().getPackageName());
+                }};
+                generateCodeFile(params, config.getServiceImpl().getProjectPath(), config.getServiceImpl().getPackageName(), pojo.getClassName() + "ServiceImpl.java", "serviceImpl.java", templateEngine, false);
+            }
             //生成xml
             params = new HashMap() {{
                 put("p", pojo);
