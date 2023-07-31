@@ -106,6 +106,13 @@ public class XMLUtil {
 //                        if(StringUtil.isNotEmpty(generateController)){
 //                            tab.setGenerateController(Boolean.valueOf(generateController));
 //                        }
+
+                        //模板
+                        String template = e.attributeValue("template");
+                        if (StringUtil.isEmpty(template)) {
+                            template = "mybatis-mapper";
+                        }
+                        tab.setTemplate(template);
                         return tab;
                     }).collect(Collectors.toList());
             config.setTableList(tableList);

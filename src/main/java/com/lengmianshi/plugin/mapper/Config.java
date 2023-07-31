@@ -29,6 +29,7 @@ public class Config {
         //private boolean generateController;
         //是否生成service
         private boolean generateService = true;
+        private String template;
     }
 
     @Data

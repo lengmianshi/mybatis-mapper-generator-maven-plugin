@@ -50,7 +50,7 @@ public class GenerateService {
                 put("p", pojo);
                 put("packageName", config.getPojo().getPackageName());
             }};
-            generateCodeFile(params, config.getPojo().getProjectPath(), config.getPojo().getPackageName(), pojo.getClassName() + ".java", "model.java", templateEngine, true);
+            generateCodeFile(params, config.getPojo().getProjectPath(), config.getPojo().getPackageName(), pojo.getClassName() + ".java", table.getTemplate(), "model.java", templateEngine, true);
 
             //生成mapper
             params = new HashMap() {{
@@ -58,7 +58,7 @@ public class GenerateService {
                 put("packageName", config.getMapper().getPackageName());
                 put("pojoPackageName", config.getPojo().getPackageName());
             }};
-            generateCodeFile(params, config.getMapper().getProjectPath(), config.getMapper().getPackageName(), pojo.getClassName() + "Mapper.java", "mapper.java", templateEngine, false);
+            generateCodeFile(params, config.getMapper().getProjectPath(), config.getMapper().getPackageName(), pojo.getClassName() + "Mapper.java", table.getTemplate(), "mapper.java", templateEngine, false);
 
             if (table.isGenerateService()) {
                 //生成Service
@@ -67,7 +67,7 @@ public class GenerateService {
                     put("packageName", config.getService().getPackageName());
                     put("pojoPackageName", config.getPojo().getPackageName());
                 }};
-                generateCodeFile(params, config.getService().getProjectPath(), config.getService().getPackageName(), pojo.getClassName() + "Service.java", "service.java", templateEngine, false);
+                generateCodeFile(params, config.getService().getProjectPath(), config.getService().getPackageName(), pojo.getClassName() + "Service.java", table.getTemplate(), "service.java", templateEngine, false);
 
                 //生成ServiceImpl
                 params = new HashMap() {{
@@ -77,7 +77,7 @@ public class GenerateService {
                     put("servicePackageName", config.getService().getPackageName());
                     put("mapperPackageName", config.getMapper().getPackageName());
                 }};
-                generateCodeFile(params, config.getServiceImpl().getProjectPath(), config.getServiceImpl().getPackageName(), pojo.getClassName() + "ServiceImpl.java", "serviceImpl.java", templateEngine, false);
+                generateCodeFile(params, config.getServiceImpl().getProjectPath(), config.getServiceImpl().getPackageName(), pojo.getClassName() + "ServiceImpl.java", table.getTemplate(), "serviceImpl.java", templateEngine, false);
             }
             //生成xml
             params = new HashMap() {{
@@ -86,7 +86,7 @@ public class GenerateService {
                 put("pojoPackageName", config.getPojo().getPackageName());
             }};
             templateEngine = templateEngine(TemplateMode.XML);
-            generateCodeFile(params, config.getXml().getProjectPath(), config.getXml().getPackageName(), pojo.getClassName() + "Mapper.xml", "mapper.xml", templateEngine, true);
+            generateCodeFile(params, config.getXml().getProjectPath(), config.getXml().getPackageName(), pojo.getClassName() + "Mapper.xml", table.getTemplate(), "mapper.xml", templateEngine, true);
 
         }
 
@@ -114,7 +114,7 @@ public class GenerateService {
     /**
      * 生成代码文件
      */
-    private void generateCodeFile(Map<String, Object> params, String projectPath, String packageName, String fileName, String template, TemplateEngine templateEngine, boolean isOverride) throws Exception {
+    private void generateCodeFile(Map<String, Object> params, String projectPath, String packageName, String fileName, String templateDir, String template, TemplateEngine templateEngine, boolean isOverride) throws Exception {
         boolean isXml = Objects.equals("mapper.xml", template);
         String outFilePath = PathUtil.getAbsolutePath(outerProjectDir, projectPath + File.separator + PathUtil.convertPath(packageName) + File.separator + fileName);
         File file = new File(outFilePath);
@@ -135,7 +135,7 @@ public class GenerateService {
         //如果xml文件已存在，则用新生成的ResultMap去替换旧文件中的ResultMap，这样可以保留之前已经定义好的方法
         if (isXml && fileExists) {
             //渲染模板，并获取resultMap元素
-            String xml = templateEngine.process(template, context);
+            String xml = templateEngine.process(templateDir + "/" + template, context);
             StringBuilder sb = new StringBuilder();
             InputStream in = new ByteArrayInputStream(xml.getBytes());
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "utf-8"));
@@ -160,7 +160,7 @@ public class GenerateService {
 
         } else {
             Writer writer = new FileWriter(file);
-            templateEngine.process(template, context, writer);
+            templateEngine.process(templateDir + "/" + template, context, writer);
         }
 
         //删除多余的空行
