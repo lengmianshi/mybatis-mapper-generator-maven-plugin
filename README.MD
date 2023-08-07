@@ -6,7 +6,7 @@ mybatis-mapper代码生成器要与mybatis-mapper（项目地址：https://mappe
     <plugin>
         <groupId>io.github.lengmianshi</groupId>
         <artifactId>mybatis-mapper-generator-maven-plugin</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
         <configuration>
             <configFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configFile>
         </configuration>

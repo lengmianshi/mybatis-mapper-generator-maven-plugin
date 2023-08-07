@@ -220,7 +220,8 @@ public class GenerateService {
                         "COLUMN_KEY " +
                         "FROM " +
                         "INFORMATION_SCHEMA.COLUMNS " +
-                        "WHERE table_schema = '%s' AND table_name = '%s'", this.dbUtil.getDatabase(), table.getTableName());
+                        "WHERE table_schema = '%s' AND table_name = '%s'" +
+                        "ORDER BY ORDINAL_POSITION ASC", this.dbUtil.getDatabase(), table.getTableName());
 
                 st = con.createStatement();
                 rs = st.executeQuery(sql);

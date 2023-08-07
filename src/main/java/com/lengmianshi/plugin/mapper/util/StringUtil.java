@@ -45,7 +45,7 @@ public class StringUtil {
                         return e.substring(0, 1).toUpperCase(Locale.ROOT) + e.substring(1).toLowerCase(Locale.ROOT);
                     }
 
-                    return e;
+                    return e.toUpperCase();
                 }).collect(Collectors.joining(""));
     }
 

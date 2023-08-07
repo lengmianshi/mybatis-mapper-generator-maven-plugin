@@ -82,7 +82,7 @@ public class TypeUtil {
         put("tinytext", "LONGVARCHAR");
         put("mediumtext", "LONGVARCHAR");
         put("longtext", "LONGVARCHAR");
-        put("json", "JSON");
+        put("json", "LONGVARCHAR");
         put("longvarchar", "LONGVARCHAR");
         put("numeric", "NUMERIC");
         put("real", "REAL");
