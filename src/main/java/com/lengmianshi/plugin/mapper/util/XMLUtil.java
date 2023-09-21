@@ -65,6 +65,12 @@ public class XMLUtil {
         pkg.setProjectPath(pojoGenerator.attributeValue("project"));
         config.setPojo(pkg);
 
+        Element dtoGenerator = context.element("dtoGenerator");
+        pkg = new Config.Package();
+        pkg.setPackageName(dtoGenerator.attributeValue("package"));
+        pkg.setProjectPath(dtoGenerator.attributeValue("project"));
+        config.setDto(pkg);
+
         Element xmlGenerator = context.element("xmlGenerator");
         pkg = new Config.Package();
         pkg.setPackageName(xmlGenerator.attributeValue("package"));
@@ -97,9 +103,17 @@ public class XMLUtil {
                         Config.Table tab = new Config.Table();
                         tab.setTableName(e.attributeValue("tableName"));
                         tab.setClassName(e.attributeValue("className"));
+
+                        //是否生成service
                         String generateService = e.attributeValue("generateService");
                         if (StringUtil.isNotEmpty(generateService)) {
                             tab.setGenerateService(Boolean.valueOf(generateService));
+                        }
+
+                        //是否生成dto
+                        String generateDTO = e.attributeValue("generateDTO");
+                        if (StringUtil.isNotEmpty(generateDTO)) {
+                            tab.setGenerateDTO(Boolean.valueOf(generateDTO));
                         }
 
 //                        String generateController = e.attributeValue("generateController");

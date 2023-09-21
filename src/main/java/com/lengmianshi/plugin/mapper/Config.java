@@ -10,6 +10,8 @@ public class Config {
     private JdbcConnection jdbcConnection;
     //生成pojo配置
     private Package pojo;
+    //生成dto配置
+    private Package dto;
     //生成mapper配置
     private Package mapper;
     //生成xml配置
@@ -29,6 +31,8 @@ public class Config {
         //private boolean generateController;
         //是否生成service
         private boolean generateService = true;
+        //是否生成dto
+        private boolean generateDTO = false;
         private String template;
     }
 

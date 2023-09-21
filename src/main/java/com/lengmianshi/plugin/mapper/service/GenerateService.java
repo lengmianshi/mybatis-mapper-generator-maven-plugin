@@ -1,5 +1,10 @@
 package com.lengmianshi.plugin.mapper.service;
 
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.lengmianshi.plugin.mapper.Config;
 import com.lengmianshi.plugin.mapper.model.Field;
 import com.lengmianshi.plugin.mapper.model.JavaType;
@@ -79,6 +84,18 @@ public class GenerateService {
                 }};
                 generateCodeFile(params, config.getServiceImpl().getProjectPath(), config.getServiceImpl().getPackageName(), pojo.getClassName() + "ServiceImpl.java", table.getTemplate(), "serviceImpl.java", templateEngine, false);
             }
+
+            if (table.isGenerateDTO()) {
+                //生成dto
+                params = new HashMap() {{
+                    put("p", pojo);
+                    put("packageName", config.getDto().getPackageName());
+                    put("pojoPackageName", config.getDto().getPackageName());
+                }};
+                generateCodeFile(params, config.getDto().getProjectPath(), config.getDto().getPackageName(), pojo.getClassName() + "DTO.java", table.getTemplate(), "dto.java", templateEngine, true);
+
+            }
+
             //生成xml
             params = new HashMap() {{
                 put("p", pojo);
@@ -133,7 +150,7 @@ public class GenerateService {
 
         boolean fileExists = file.exists();
         //如果xml文件已存在，则用新生成的ResultMap去替换旧文件中的ResultMap，这样可以保留之前已经定义好的方法
-        if (isXml && fileExists) {
+        if (fileExists && isXml) {
             //渲染模板，并获取resultMap元素
             String xml = templateEngine.process(templateDir + "/" + template, context);
             StringBuilder sb = new StringBuilder();
@@ -158,13 +175,65 @@ public class GenerateService {
 
             FileUtil.replaceContent(file, "baseResultMap", "</resultMap>", sb.toString());
 
+        } else if (fileExists && Objects.equals("model.java", template)) {
+            //对实体类中定义的方法需要保留
+            List<ImportDeclaration> oldImportList = null;//旧文件中的import
+            List<MethodDeclaration> methodList = new ArrayList<>();//旧文件中定义的方法
+            {
+                FileInputStream in = new FileInputStream(outFilePath);
+                CompilationUnit cu = new JavaParser().parse(in).getResult().get();
+                oldImportList = cu.getImports();
+                cu.getChildNodes().forEach(node ->
+                {
+                    if (node.getClass().getSimpleName().equals("ClassOrInterfaceDeclaration")) {
+                        node.getChildNodes().forEach(n -> {
+                            if (n.getClass().getSimpleName().equals("MethodDeclaration")) {
+                                methodList.add((MethodDeclaration) n);
+                            }
+                        });
+                    }
+                });
+                in.close();
+            }
+
+            //生成代码
+            Writer writer = new FileWriter(file);
+            templateEngine.process(templateDir + "/" + template, context, writer);
+
+            if (methodList.size() > 0) {
+                InputStream in = new FileInputStream(outFilePath);
+                CompilationUnit cu = new JavaParser().parse(in).getResult().get();
+
+                //增加import语句
+                if (oldImportList.size() > 0) {
+                    List<ImportDeclaration> imports = cu.getImports();
+                    for (ImportDeclaration node : oldImportList) {
+                        if (imports.stream().noneMatch(e -> e.toString().equals(node.toString()))) {
+                            cu.addImport(node);
+                        }
+                    }
+                }
+
+                //增加方法
+                TypeDeclaration<?> typeDeclaration = cu.getTypes().get(0);//当前类方法定义
+                for (MethodDeclaration method : methodList) {
+                    typeDeclaration.addMember(method);
+                }
+
+                in.close();
+
+                //重新保存文件
+                FileCopyUtil.copy(new ByteArrayInputStream(cu.toString().getBytes()), new FileOutputStream(file));
+
+            }
+
         } else {
             Writer writer = new FileWriter(file);
             templateEngine.process(templateDir + "/" + template, context, writer);
         }
 
         //删除多余的空行
-        if (Objects.equals("model.java", template)) {
+        if (Objects.equals("model.java", template) || Objects.equals("dto.java", template)) {
             FileUtil.removeEmptyRows(file, "{", "}", "private");
         } else if (Objects.equals("mapper.xml", template)) {
             FileUtil.removeEmptyRows(file, "baseResultMap", "</resultMap>", null);

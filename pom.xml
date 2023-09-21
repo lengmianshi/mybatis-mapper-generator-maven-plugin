@@ -4,7 +4,7 @@
 
     <groupId>io.github.lengmianshi</groupId>
     <artifactId>mybatis-mapper-generator-maven-plugin</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <packaging>maven-plugin</packaging>
 
     <name>mybatis-mapper-generator-maven-plugin Maven Plugin</name>
@@ -55,11 +55,14 @@
             <artifactId>thymeleaf</artifactId>
             <version>3.1.1.RELEASE</version>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>mysql</groupId>-->
-        <!--            <artifactId>mysql-connector-java</artifactId>-->
-        <!--            <version>5.1.47</version>-->
-        <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.github.javaparser/javaparser-core -->
+        <dependency>
+            <groupId>com.github.javaparser</groupId>
+            <artifactId>javaparser-core</artifactId>
+            <version>3.25.5</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

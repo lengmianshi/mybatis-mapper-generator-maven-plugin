@@ -10,6 +10,8 @@
         </jdbcConnection>
         <!-- pojo所在的包 -->
         <pojoGenerator package="com.demo.api.bean.entity" project="../demo-api/src/main/java"/>
+        <!-- dto所在的包 -->
+        <dtoGenerator package="com.demo.api.bean.dto" project="../demo-api/src/main/java"/>
         <!-- 放置mapper的包 -->
         <mapperGenerator package="com.demo.mapper" project="src/main/java"/>
         <!-- 放置service的包 -->
@@ -19,6 +21,6 @@
         <!-- 放置xml文件的包 -->
         <xmlGenerator package="mappers" project="src/main/resources"/>
 
-        <table tableName="test" className="Test" generateService="true" template="mybatis-mapper"/>
+        <table tableName="test" className="Test" generateService="true" generateDTO="false" template="mybatis-mapper"/>
     </context>
 </generatorConfiguration>

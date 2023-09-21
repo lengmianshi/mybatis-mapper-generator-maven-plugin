@@ -3,8 +3,8 @@
 <mapper th:namespace="${mapperPackageName}+'.'+ ${p.className}+'Mapper'">
   <resultMap id="baseResultMap" th:type="${pojoPackageName}+'.'+${p.className}">
     <th:block th:each="field : ${p.fieldList}">
-      <id th:if="${field.primaryKey}" th:property="${field.javaName}" th:column="${field.fieldName}" th:jdbcType="${field.jdbcType}"/>
-      <result th:unless="${field.primaryKey}" th:property="${field.javaName}" th:column="${field.fieldName}" th:jdbcType="${field.jdbcType}"/><th:block th:if="!${#strings.isEmpty(field.remark)}" th:utext="'<!-- '+${field.remark}+' -->'"></th:block>
+      <id th:if="${field.primaryKey}" th:column="${field.fieldName}" th:property="${field.javaName}"  th:jdbcType="${field.jdbcType}"/>
+      <result th:unless="${field.primaryKey}" th:column="${field.fieldName}"  th:property="${field.javaName}" th:jdbcType="${field.jdbcType}"/><th:block th:if="!${#strings.isEmpty(field.remark)}" th:utext="'<!-- '+${field.remark}+' -->'"></th:block>
     </th:block>
   </resultMap>
 </mapper>

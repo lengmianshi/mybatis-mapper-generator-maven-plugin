@@ -6,7 +6,7 @@ mybatis-mapper代码生成器要与mybatis-mapper（项目地址：https://mappe
     <plugin>
         <groupId>io.github.lengmianshi</groupId>
         <artifactId>mybatis-mapper-generator-maven-plugin</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.9</version>
         <configuration>
             <configFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configFile>
         </configuration>
@@ -36,6 +36,8 @@ mybatis-mapper代码生成器要与mybatis-mapper（项目地址：https://mappe
         </jdbcConnection>
         <!-- pojo所在的包 -->
         <pojoGenerator package="com.demo.api.bean.entity" project="../demo-api/src/main/java"/>
+        <!-- dto所在的包 -->
+        <dtoGenerator package="com.demo.api.bean.dto" project="../demo-api/src/main/java"/>
         <!-- 放置mapper的包 -->
         <mapperGenerator package="com.demo.mapper" project="src/main/java"/>
         <!-- 放置service的包 -->
@@ -45,7 +47,7 @@ mybatis-mapper代码生成器要与mybatis-mapper（项目地址：https://mappe
         <!-- 放置xml文件的包 -->
         <xmlGenerator package="mappers" project="src/main/resources"/>
 
-        <table tableName="test" className="Test" generateService="true" template="mybatis-mapper"/>
+        <table tableName="test" className="Test" generateService="true" generateDTO="false"  template="mybatis-mapper"/>
     </context>
 </generatorConfiguration>
 
@@ -59,6 +61,7 @@ mybatis-mapper代码生成器要与mybatis-mapper（项目地址：https://mappe
   - `tableName` 为数据库表名
   - `className` 为对应的Java Class名，如果不指定ClassName，则会自动将表名按驼峰命名规则转换，如`user_detail` 对应的类型为`UserDetail`；
   - `generateService`表示是否生成Service，默认为true
+  - `generateDTO`表示是否生成DTO，默认为false
   - `template` 表示使用哪套模板；选项有mybatis-mapper、mybatis-plus，默认为mybatis-mapper
 
 3. 点击idea右侧中的Plugins, 双击”mybatis-mapper-genrator:generate“即可生成代码
