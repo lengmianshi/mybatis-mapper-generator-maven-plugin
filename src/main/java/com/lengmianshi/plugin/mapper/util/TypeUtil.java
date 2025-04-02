@@ -69,7 +69,7 @@ public class TypeUtil {
         put("datetime", "TIMESTAMP");
         put("timestamp", "TIMESTAMP");
         put("time", "TIMESTAMP");
-        put("year", "YEAR");
+        put("year", "INTEGER");
         put("char", "CHAR");
         put("varchar", "VARCHAR");
         put("binary", "BINARY");
